@@ -15,6 +15,13 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-controls</artifactId>
+        <version>11.0.2</version>
+</dependency>
+
   </dependencies>
 
  <properties>
@@ -26,8 +33,10 @@
 
 <build>
   <plugins>
-    <plugin>
-        <groupId>org.codehaus.mojo</groupId>
+
+
+       <plugin>
+     <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.2.1</version>
         <executions>
@@ -42,6 +51,17 @@
         </configuration>
     </plugin>
 
+
+            <plugin>
+                  <groupId>org.openjfx</groupId>
+                  <artifactId>javafx-maven-plugin</artifactId>
+                  <version>0.0.3</version>
+                  <configuration>
+                         <mainClass>com.alexandr7035.print2p.Main</mainClass>
+                  </configuration>
+             </plugin>
+
+
   <plugin>
 	<groupId>org.apache.maven.plugins</groupId>
 	<artifactId>maven-jar-plugin</artifactId>
@@ -54,8 +74,7 @@
 	  </archive>
 	</configuration>
 </plugin>
-
-
+	
 
   </plugins>
 </build>
