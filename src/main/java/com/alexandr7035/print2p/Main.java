@@ -5,33 +5,62 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
- 
+import javafx.scene.control.Label;
+
+import javafx.fxml.FXMLLoader;
+
+import java.io.IOException;
+import java.net.URL;
+
 public class Main extends Application {
     
-    @Override
-    public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
+    private static final int WINDOW_WIDTH = 400;
+    private static final int WINDOW_HEIGTH = 300;
+
+    private Button printFirstBtn;
+    private Button printSecondBtn;
+    
+    private VBox mainLayout;
+    private HBox buttonsLayout;
+
+
+    // Class constructor
+    public Main() {
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
+        // Init widgets
+        this.mainLayout = new VBox();
+        this.buttonsLayout = new HBox();
 
- Scene scene = new Scene(root, 300, 250);
+        this.printFirstBtn = new Button("Print first");
+        this.printSecondBtn = new Button("Print Second");
 
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
- public static void main(String[] args) {
+
+    @Override
+    public void start(Stage stage) {
+        
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(getClass().getResource("/views/main.fxml"));
+        VBox root = null;
+        
+        try {
+            root = (VBox) loader.load(); 
+
+        } catch (IOException e1) {
+            System.out.println("EXCEEEEEEEEEEEEEEEEEPTION");
+            e1.printStackTrace();
+        }
+
+        stage.setScene(new Scene(root));
+        stage.show();
+
+    }
+
+
+    public static void main(String[] args) {
         launch(args);
     }
 }

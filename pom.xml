@@ -22,12 +22,19 @@
         <version>11.0.2</version>
 </dependency>
 
+	<dependency>
+    <groupId>org.openjfx</groupId>
+    <artifactId>javafx-fxml</artifactId>
+    <version>11.0.1</version>
+</dependency>
   </dependencies>
 
  <properties>
      <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 </properties>
+
+
 
 
 
@@ -77,6 +84,13 @@
 	
 
   </plugins>
+
+
+  <resources>
+<resource>
+<directory>src/main/resources</directory>
+</resource>
+</resources>
 </build>
 
 </project>
