@@ -22,7 +22,7 @@ public class Main extends Application {
     private Button printFirstBtn;
     private Button printSecondBtn;
     
-    private VBox mainLayout;
+    private GridPane mainLayout;
     private HBox buttonsLayout;
 
 
@@ -30,7 +30,7 @@ public class Main extends Application {
     public Main() {
         
         // Init widgets
-        this.mainLayout = new VBox();
+        //this.mainLayout = new VBox();
         this.buttonsLayout = new HBox();
 
         this.printFirstBtn = new Button("Print first");
@@ -44,17 +44,17 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("/views/main.fxml"));
-        VBox root = null;
+        this.mainLayout = null;
         
         try {
-            root = (VBox) loader.load(); 
+            mainLayout = (GridPane) loader.load(); 
 
         } catch (IOException e1) {
             System.out.println("EXCEEEEEEEEEEEEEEEEEPTION");
             e1.printStackTrace();
         }
 
-        stage.setScene(new Scene(root));
+        stage.setScene(new Scene(mainLayout));
         stage.show();
 
     }
