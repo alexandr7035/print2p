@@ -1,5 +1,7 @@
 package com.alexandr7035.print2p;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,10 +14,10 @@ import javafx.scene.control.Label;
 
 import javafx.fxml.FXMLLoader;
 
-import java.io.IOException;
-import java.net.URL;
+
 
 import javafx.scene.input.*;
+
 
 public class Main extends Application {
     
@@ -32,6 +34,25 @@ public class Main extends Application {
     private GridPane mainLayout;
     private Scene scene;
 
+    private Settings settingsObj;
+
+    // Class constructor
+    public Main() {
+
+        // Detect os
+        if (System.getProperty("os.name").toString().equals("Linux")) {
+            System.out.println("RUN IN LINUX");
+
+            settingsObj =  new SettingsUnix();
+        }
+
+        else {
+            // Windows support
+        }
+
+        settingsObj.initApp();
+
+    }
 
     @Override
     public void start(Stage stage) {
