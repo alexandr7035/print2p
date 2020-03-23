@@ -34,23 +34,10 @@ public class Main extends Application {
     private GridPane mainLayout;
     private Scene scene;
 
-    private Settings settingsObj;
-
     // Class constructor
     public Main() {
 
-        // Detect os
-        if (System.getProperty("os.name").toString().equals("Linux")) {
-            System.out.println("RUN IN LINUX");
-
-            settingsObj =  new SettingsUnix();
-        }
-
-        else {
-            // Windows support
-        }
-
-        settingsObj.initApp();
+        Settings.initApp();
 
     }
 
