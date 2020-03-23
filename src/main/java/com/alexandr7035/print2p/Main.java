@@ -24,6 +24,9 @@ public class Main extends Application {
 
     private Button printFirstBtn;
     private Button printSecondBtn;
+    private Button setPrintedFileBtn;
+    private Button resetPrintedFileBtn;
+
     private TextArea printedFileField;
 
     private GridPane mainLayout;
@@ -40,8 +43,56 @@ public class Main extends Application {
         
         // Widgets
         this.printedFileField = (TextArea) scene.lookup("#printedFileField");
+
+        // printFirstBtn
+         // FIXME use lambda
         this.printFirstBtn = (Button) scene.lookup("#printFirstBtn");
+        this.printFirstBtn.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("PRESSED: printFirstBtn");
+            }
+        });
+
+        // printSecondBtn
+        // FIXME use lambda
         this.printSecondBtn = (Button) scene.lookup("#printSecondBtn");
+        this.printSecondBtn.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("PRESSED: printSecondBtn");
+            }
+        });
+
+
+        // setPrintedFileBtn
+        // FIXME use lambda
+        this.setPrintedFileBtn = (Button) scene.lookup("#setPrintedFileBtn");
+        this.setPrintedFileBtn.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("PRESSED: setPrintedFileBtn");
+            }
+        });
+        
+        // resetPrintedFileBtn
+        // FIXME use lambda
+        this.resetPrintedFileBtn = (Button) scene.lookup("#resetPrintedFileBtn");
+        this.resetPrintedFileBtn.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("PRESSED: resetPrintedFileBtn");
+                Main.this.resetPrintedFile();
+            }
+        });
+
+        
+
+
 
         // Allow dropping file to textArea
         this.enableFileDropping();
@@ -66,6 +117,10 @@ public class Main extends Application {
 
     private void setPrintedFile(String fileName) {
         this.printedFileField.setText(fileName);
+    }
+
+    private void resetPrintedFile() {
+        this.printedFileField.setText("");
     }
 
     private void enableFileDropping() {
