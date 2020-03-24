@@ -155,6 +155,8 @@ public class Main extends Application {
             this.printFirstBtn.setDisable(false);
             this.printSecondBtn.setDisable(false);
             this.resetPrintedFileBtn.setDisable(false);
+
+            System.out.println("PAGES: " + this.printedDoc.getPagesCount());
         }
         else {
             this.resetPrintedFile();

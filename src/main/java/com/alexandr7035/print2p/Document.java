@@ -9,6 +9,9 @@ import com.alexandr7035.print2p.Settings;
 import java.util.Arrays;
 import java.util.ArrayList;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
+
 public class Document {
 
     private String docPath;
@@ -17,6 +20,7 @@ public class Document {
     private boolean isPrepared;
 
     private static List<String> prepareDocCommand = Arrays.asList("unoconv", "-o");
+    private static List<String> getPagesCountCommand = Arrays.asList("pdfinfo", "| grep Pages | awk '{print $2}'");
 
     public Document(File document) {
         this.docPath = document.getAbsolutePath();
@@ -45,7 +49,6 @@ public class Document {
             ProcessBuilder pb = new ProcessBuilder(executedCommand);
             Process p = pb.start();
             p.waitFor();
-            System.out.println(p.exitValue());
 
             if (p.exitValue() == 0) {
                 System.out.println("UNOCONV SUCCEEDED");
@@ -70,8 +73,24 @@ public class Document {
 
     }
 
-    private void getPagesCound() {
 
+    // Apache PDFBox library is used to count the pages
+    public int getPagesCount() {
+        if (this.isPrepared == true) {
+            try {
+                PDDocument pdfdoc = PDDocument.load(new File(this.preparedDocPath));
+                int pagesCount = pdfdoc.getNumberOfPages();
+
+                return pagesCount;
+            }
+            catch (IOException e) {
+                return 0;
+            }
+        }
+        else {
+            return 0;
+
+        }
     }
 
 }
