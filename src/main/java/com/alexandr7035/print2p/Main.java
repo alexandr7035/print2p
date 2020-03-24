@@ -152,7 +152,11 @@ public class Main extends Application {
         if (this.printedDoc.prepareDoc()) {
 
             // Enable print buttons
-            this.printFirstBtn.setDisable(false);
+            // printFirstButton is enabled only if PDF contains more than 1 page 
+            // (because it prints even pages)
+            if (this.printedDoc.getPagesCount() > 1 ) {
+                this.printFirstBtn.setDisable(false);
+            }
             this.printSecondBtn.setDisable(false);
             this.resetPrintedFileBtn.setDisable(false);
 
