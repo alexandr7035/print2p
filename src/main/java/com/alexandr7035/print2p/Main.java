@@ -1,6 +1,7 @@
 package com.alexandr7035.print2p;
 
 import java.io.IOException;
+import java.io.File;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -11,6 +12,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import javafx.fxml.FXMLLoader;
 
@@ -93,6 +97,7 @@ public class Main extends Application {
         // setPrintedFileBtn
         // FIXME use lambda
         this.setPrintedFileBtn = (Button) scene.lookup("#setPrintedFileBtn");
+        this.setPrintedFileBtn.setDisable(true);
         this.setPrintedFileBtn.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
@@ -141,13 +146,21 @@ public class Main extends Application {
 
     private void setPrintedFile(String fileName) {
         this.printedFileField.setText(fileName);
-        this.printedDoc = new Document(fileName);
+        this.printedDoc = new Document(new File(fileName));
 
-        // Enable print buttons
-        this.printFirstBtn.setDisable(false);
-        this.printSecondBtn.setDisable(false);
-        this.resetPrintedFileBtn.setDisable(false);
-    }
+        // If the document succesfully converted to pdf
+        if (this.printedDoc.prepareDoc()) {
+
+            // Enable print buttons
+            this.printFirstBtn.setDisable(false);
+            this.printSecondBtn.setDisable(false);
+            this.resetPrintedFileBtn.setDisable(false);
+        }
+        else {
+            this.resetPrintedFile();
+        }    
+        
+      }
 
     private void resetPrintedFile() {
         this.printedFileField.setText("");

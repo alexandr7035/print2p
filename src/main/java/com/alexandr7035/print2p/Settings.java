@@ -9,7 +9,7 @@ public final class Settings {
 
     private static final File WORKING_DIR = new File(WORKING_DIR_PATH);
 
-    private static final File DOC_DIR = new File(WORKING_DIR_PATH + "/doc");
+    public static final File DOC_DIR = new File(WORKING_DIR_PATH + "/doc");
 
     public static void initApp() {
 
