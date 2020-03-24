@@ -34,10 +34,14 @@ public class Main extends Application {
     private GridPane mainLayout;
     private Scene scene;
 
+    private Document printedDoc;
+
     // Class constructor
     public Main() {
 
         Settings.initApp();
+
+        this.printedDoc = null;
 
     }
 
@@ -55,22 +59,33 @@ public class Main extends Application {
         // printFirstBtn
          // FIXME use lambda
         this.printFirstBtn = (Button) scene.lookup("#printFirstBtn");
+        this.printFirstBtn.setDisable(true);
         this.printFirstBtn.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("PRESSED: printFirstBtn");
+
+                if (Main.this.printedDoc == null) {
+                    System.out.println("WARNING: no printed document set");
+                }
+
             }
         });
 
         // printSecondBtn
         // FIXME use lambda
         this.printSecondBtn = (Button) scene.lookup("#printSecondBtn");
+        this.printSecondBtn.setDisable(true);
         this.printSecondBtn.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("PRESSED: printSecondBtn");
+
+                if (Main.this.printedDoc == null) {
+                    System.out.println("WARNING: no printed document set");
+                }
             }
         });
 
@@ -89,6 +104,7 @@ public class Main extends Application {
         // resetPrintedFileBtn
         // FIXME use lambda
         this.resetPrintedFileBtn = (Button) scene.lookup("#resetPrintedFileBtn");
+        this.resetPrintedFileBtn.setDisable(true);
         this.resetPrintedFileBtn.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
@@ -125,10 +141,24 @@ public class Main extends Application {
 
     private void setPrintedFile(String fileName) {
         this.printedFileField.setText(fileName);
+        this.printedDoc = new Document(fileName);
+
+        // Enable print buttons
+        this.printFirstBtn.setDisable(false);
+        this.printSecondBtn.setDisable(false);
+        this.resetPrintedFileBtn.setDisable(false);
     }
 
     private void resetPrintedFile() {
         this.printedFileField.setText("");
+
+        // Disable print buttons
+        this.printFirstBtn.setDisable(true);
+        this.printSecondBtn.setDisable(true);
+        this.resetPrintedFileBtn.setDisable(true);
+
+        // Set printedDoc to null
+        this.printedDoc = null;
     }
 
     private void enableFileDropping() {
