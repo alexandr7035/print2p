@@ -93,4 +93,8 @@ public class Document {
         }
     }
 
+    public String getPreparedDocPath() {
+        return this.preparedDocPath;
+    }
+
 }

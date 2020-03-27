@@ -74,6 +74,8 @@ public class Main extends Application {
                     System.out.println("WARNING: no printed document set");
                 }
 
+                PrintWrapper.printFirst(Main.this.printedDoc);
+
             }
         });
 
@@ -90,6 +92,8 @@ public class Main extends Application {
                 if (Main.this.printedDoc == null) {
                     System.out.println("WARNING: no printed document set");
                 }
+
+                PrintWrapper.printSecond(Main.this.printedDoc);
             }
         });
 
