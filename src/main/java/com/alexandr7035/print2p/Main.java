@@ -1,6 +1,8 @@
 package com.alexandr7035.print2p;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.io.File;
 
 import javafx.application.Application;
@@ -136,7 +138,12 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 System.out.println("PRESSED: viewDocBtn");
 
-                
+                ArrayList<String> viewCommand = new ArrayList(Arrays.asList("xdg-open", 
+                                                         Main.this.printedDoc.getPreparedDocPath()));
+
+                System.out.println(viewCommand.toString());
+
+                CmdExecutor.executeSilentCommand(viewCommand);
             }
         });
         
