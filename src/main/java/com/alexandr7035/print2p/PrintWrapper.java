@@ -28,31 +28,15 @@ public class PrintWrapper {
         System.out.println("PrintWrapper: printfirst called");
 
         ArrayList<String> command = getPrintFirstCommand(document.getPreparedDocPath());
-        executeCommand(command);
+        CmdExecutor.executeSilentCommand(command);
     }
 
     public static void printSecond(Document document) {
         System.out.println("PrintWrapper: printsecond called");
 
         ArrayList<String> command = getPrintSecondCommand(document.getPreparedDocPath());
-        executeCommand(command);
+        CmdExecutor.executeSilentCommand(command);
     }
     
-
-    private static int executeCommand(ArrayList<String> command) {
-        try { 
-            
-             ProcessBuilder pb = new ProcessBuilder(command).redirectErrorStream(true);
-             Process p = pb.start();
-             
-             p.waitFor();
-             return p.exitValue();
-        }
-
-        catch (IOException|InterruptedException e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
 }
 
