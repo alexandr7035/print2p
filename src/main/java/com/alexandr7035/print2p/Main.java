@@ -33,7 +33,8 @@ public class Main extends Application {
     private Button setPrintedFileBtn;
     private Button resetPrintedFileBtn;
 
-    private TextArea printedFileField;
+    private Label printedFileField;
+    private Label pagesCountLabel;
 
     private GridPane mainLayout;
     private Scene scene;
@@ -58,7 +59,8 @@ public class Main extends Application {
         stage.setScene(scene);
         
         // Widgets
-        this.printedFileField = (TextArea) scene.lookup("#printedFileField");
+        this.printedFileField = (Label) scene.lookup("#printedFileField");
+        this.pagesCountLabel = (Label) scene.lookup("#pagesCountLabel");
 
         // printFirstBtn
          // FIXME use lambda
@@ -148,9 +150,11 @@ public class Main extends Application {
         }
     }
 
-    private void setPrintedFile(String fileName) {
-        this.printedFileField.setText(fileName);
-        this.printedDoc = new Document(new File(fileName));
+    private void setPrintedFile(String filePath) {
+
+        // FIXME can document be extended from File???
+        File doc_file = new File(filePath);
+        this.printedDoc = new Document(doc_file);
 
         // If the document succesfully converted to pdf
         if (this.printedDoc.prepareDoc()) {
@@ -164,6 +168,10 @@ public class Main extends Application {
             this.printSecondBtn.setDisable(false);
             this.resetPrintedFileBtn.setDisable(false);
 
+            // Set info to widgets
+            this.printedFileField.setText(doc_file.getName());
+            this.pagesCountLabel.setText("" + this.printedDoc.getPagesCount());
+
             System.out.println("PAGES: " + this.printedDoc.getPagesCount());
         }
         else {
@@ -173,7 +181,10 @@ public class Main extends Application {
       }
 
     private void resetPrintedFile() {
+
+        // Reset widgets
         this.printedFileField.setText("");
+        this.pagesCountLabel.setText("");
 
         // Disable print buttons
         this.printFirstBtn.setDisable(true);
