@@ -99,7 +99,7 @@
                   <Insets bottom="5.0" top="5.0" />
                </GridPane.margin>
             </ProgressBar>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="View file" GridPane.columnIndex="4" GridPane.rowIndex="1">
+            <Button id="viewDocBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="View file" GridPane.columnIndex="4" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                </GridPane.margin>

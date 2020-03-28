@@ -32,6 +32,7 @@ public class Main extends Application {
     private Button printSecondBtn;
     private Button setPrintedFileBtn;
     private Button resetPrintedFileBtn;
+    private Button viewDocBtn;
 
     private Label printedFileField;
     private Label pagesCountLabel;
@@ -105,7 +106,7 @@ public class Main extends Application {
         this.setPrintedFileBtn = (Button) scene.lookup("#setPrintedFileBtn");
         this.setPrintedFileBtn.setDisable(true);
         this.setPrintedFileBtn.setOnAction(new EventHandler<ActionEvent>() {
- 
+
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("PRESSED: setPrintedFileBtn");
@@ -125,10 +126,20 @@ public class Main extends Application {
             }
         });
 
+        // viewDocBtn
+        // FIXME use lambda
+        this.viewDocBtn = (Button) scene.lookup("#viewDocBtn");
+        this.viewDocBtn.setDisable(true);
+        this.viewDocBtn.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("PRESSED: viewDocBtn");
+
+                
+            }
+        });
         
-
-
-
         // Allow dropping file to textArea
         this.enableFileDropping();
 
@@ -167,6 +178,7 @@ public class Main extends Application {
             }
             this.printSecondBtn.setDisable(false);
             this.resetPrintedFileBtn.setDisable(false);
+            this.viewDocBtn.setDisable(false);
 
             // Set info to widgets
             this.printedFileField.setText(doc_file.getName());
@@ -186,10 +198,11 @@ public class Main extends Application {
         this.printedFileField.setText("");
         this.pagesCountLabel.setText("");
 
-        // Disable print buttons
+        // Disable buttons
         this.printFirstBtn.setDisable(true);
         this.printSecondBtn.setDisable(true);
         this.resetPrintedFileBtn.setDisable(true);
+        this.viewDocBtn.setDisable(true);
 
         // Set printedDoc to null
         this.printedDoc = null;
