@@ -14,6 +14,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -38,6 +42,8 @@ public class Main extends Application {
 
     private Label printedFileField;
     private Label pagesCountLabel;
+
+    private ProgressBar progressBar;
 
     private GridPane mainLayout;
     private Scene scene;
@@ -64,6 +70,7 @@ public class Main extends Application {
         // Widgets
         this.printedFileField = (Label) scene.lookup("#printedFileField");
         this.pagesCountLabel = (Label) scene.lookup("#pagesCountLabel");
+        this.progressBar = (ProgressBar) scene.lookup("#progressBar");
 
         // printFirstBtn
          // FIXME use lambda
@@ -168,37 +175,76 @@ public class Main extends Application {
         }
     }
 
+
+    // Called when printed file is dropped to printFileLabel
+    // or when Select button is presed.
+    // Tries to convert document to pdf (see Document.prepareDocument() method)
+    // If succeeded, enables print and other buttons
+    // If no, calls resetPrintedFile() method
     private void setPrintedFile(String filePath) {
 
         // FIXME can document be extended from File???
         File doc_file = new File(filePath);
         this.printedDoc = new Document(doc_file);
 
-        // If the document succesfully converted to pdf
-        if (this.printedDoc.prepareDoc()) {
+        // Use background Task to prepare doc
+        Task prepareDocTask = new Task<Boolean>() {
 
-            // Enable print buttons
-            // printFirstButton is enabled only if PDF contains more than 1 page 
-            // (because it prints even pages)
-            if (this.printedDoc.getPagesCount() > 1 ) {
-                this.printFirstBtn.setDisable(false);
+            @Override
+            protected Boolean call() throws Exception {
+                return Main.this.printedDoc.prepareDoc();
             }
-            this.printSecondBtn.setDisable(false);
-            this.resetPrintedFileBtn.setDisable(false);
-            this.viewDocBtn.setDisable(false);
+        };
 
-            // Set info to widgets
-            this.printedFileField.setText(doc_file.getName());
-            this.pagesCountLabel.setText("" + this.printedDoc.getPagesCount());
+        // Execute when task finishes
+        prepareDocTask.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, 
+            new EventHandler<WorkerStateEvent>() {
+               @Override
+                  public void handle(WorkerStateEvent t) {
+                    // Get the result of the task (boolean)
+                    // True if document was converted to pdf succesfully
+                    Boolean task_result = (Boolean) prepareDocTask.getValue();
 
-            System.out.println("PAGES: " + this.printedDoc.getPagesCount());
-        }
-        else {
-            this.resetPrintedFile();
-        }    
+                    if (task_result == true) { 
+                        // Unbind progressBar 
+                        progressBar.progressProperty().unbind();
+                        progressBar.setProgress(0);
+                        
+                        // Enable print buttons
+                        // printFirstButton is enabled only if PDF contains more than 1 page 
+                        // (because it prints even pages)
+                        if (printedDoc.getPagesCount() > 1 ) {
+                             printFirstBtn.setDisable(false);
+                        }
+                        printSecondBtn.setDisable(false);
+                        resetPrintedFileBtn.setDisable(false);
+                        viewDocBtn.setDisable(false);
+
+                        // Set info to widgets
+                        printedFileField.setText(doc_file.getName());
+                        pagesCountLabel.setText("" + printedDoc.getPagesCount());
+
+                        System.out.println("PAGES: " + printedDoc.getPagesCount());
+                        }
+
+                        // If conversion to pdf is not successfull 
+                        else {
+                           // See resetPrintedFile() method
+                           resetPrintedFile();
+                        }    
+                    }
+                 
+             });
+             
+        // Bind task to progressBar and run
+        progressBar.progressProperty().unbind();
+        progressBar.progressProperty().bind(prepareDocTask.progressProperty());
+        new Thread(prepareDocTask).start();
         
       }
 
+    
+    // Clear all widgets and disable buttons as when program is started
     private void resetPrintedFile() {
 
         // Reset widgets
@@ -215,6 +261,9 @@ public class Main extends Application {
         this.printedDoc = null;
     }
 
+    
+    // This part is responsible for dropping file to printFileLabel
+    // If dropped, Main.setPrintedFile() method is called
     private void enableFileDropping() {
         this.printedFileField.setOnDragOver(new EventHandler<DragEvent>() {
 
@@ -236,15 +285,16 @@ public class Main extends Application {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
                 if (db.hasFiles()) {
-                    // CHOOSE FILE 
+                    
+                    // Reset printed file if was set before
+                    Main.this.resetPrintedFile();
+                    // Set printed file
                     Main.this.setPrintedFile(db.getFiles().get(0).getAbsolutePath());
-                    //printedFileField.setText();
                     success = true;
                 }
                 /* let the source know whether the string was successfully 
                  * transferred and used */
                 event.setDropCompleted(success);
-
                 event.consume();
             }
         });
