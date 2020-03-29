@@ -1,0 +1,103 @@
+/* Root settings */
+.root {
+    /* -fx-background-color: #FFFFFF; */
+    -fx-background-color: rgb(85, 85, 85);
+}
+
+
+/* Block for 2 print buttons */
+.print-button:disabled {
+     -fx-background-color: #000000;
+}
+
+.print-button {
+     -fx-background-color: rgb(34, 33, 33);
+     /* Font color */
+     -fx-text-fill: rgb(255, 255, 255);
+
+     /* Image */
+     -fx-background-size: 100px 50px;
+     /* Don't repeat image */
+     -fx-background-repeat: no-repeat;
+     -fx-background-position: center;
+     -fx-padding: 20px;
+}
+
+.print-button:hover {
+     -fx-background-color: rgb(10, 10, 10);
+}
+
+#printFirstBtn {
+     -fx-background-image: url("../images/print_1.png");
+}
+
+#printSecondBtn {
+     -fx-background-image: url("../images/print_2.png");
+}
+
+/* Block for labels */
+#printedFileField {
+     -fx-background-color: rgb(160, 152, 152);
+     -fx-border-color: rgb(61, 57, 57);
+     -fx-border-width: 3; 
+     -fx-border-color: rgb(59, 59, 59);
+     /* -fx-border-style: segments(10, 15, 15, 15)  line-cap round ; */
+
+     /* Rounded corners */
+     -fx-border-radius: 10 10 10 10;
+     -fx-background-radius: 10 10 10 10;
+}
+
+#pagesCountLabel {
+     -fx-border-width: 2px;
+     -fx-border-color: #000000;
+     -fx-border-radius: 90 90 90 90;
+     -fx-background-color: rgb(177, 177, 177);
+     -fx-background-radius: 90 90 90 90;
+     -fx-font-weight: bold;
+}
+
+
+/* Block for small buttons */
+.small-button {
+     
+     /* Border */
+     -fx-border-width: 2px;
+     -fx-border-color: #000000;
+
+     /* Image */
+     -fx-background-size: 50px 50px;
+     /* Don't repeat image */
+     -fx-background-repeat: no-repeat;
+     -fx-background-position: center;
+
+     /* Rounded corners */
+     -fx-border-radius: 10 10 10 10;
+     -fx-background-radius: 10 10 10 10;
+
+     /* Background color */
+     -fx-background-color: rgb(177, 177, 177);
+}
+
+.small-button:hover {
+     -fx-background-color: rgb(223, 221, 221);
+}
+
+#setPrintedFileBtn {
+     -fx-background-image: url("../images/open.png");
+}
+
+#viewDocBtn {
+     -fx-background-image: url("../images/view.png");
+}
+
+#resetPrintedFileBtn {
+     -fx-background-image: url("../images/close.png");
+}
+
+
+/* Tooltip block */
+.tooltip {
+     -fx-font-size: 16px;
+     -fx-font-weight: bold;
+}
