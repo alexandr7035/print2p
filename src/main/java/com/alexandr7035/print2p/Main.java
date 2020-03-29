@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 
@@ -66,7 +67,11 @@ public class Main extends Application {
         this.loadFXML();
         this.scene = new Scene(mainLayout);
         stage.setScene(scene);
+        // stage.initStyle(StageStyle.UNDECORATED);
         
+        // Apply styles
+        scene.getStylesheets().add(Main.class.getResource("/css/main.css").toExternalForm());
+
         // Widgets
         this.printedFileField = (Label) scene.lookup("#printedFileField");
         this.pagesCountLabel = (Label) scene.lookup("#pagesCountLabel");
