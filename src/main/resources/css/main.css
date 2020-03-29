@@ -103,3 +103,9 @@
      -fx-font-size: 16px;
      -fx-font-weight: bold;
 }
+
+
+/* ProgressBar block */
+.progress-bar {
+     -fx-accent: rgb(71, 67, 67);
+}
