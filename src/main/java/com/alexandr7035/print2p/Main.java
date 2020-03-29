@@ -118,7 +118,7 @@ public class Main extends Application {
         // setPrintedFileBtn
         // FIXME use lambda
         this.setPrintedFileBtn = (Button) scene.lookup("#setPrintedFileBtn");
-        this.setPrintedFileBtn.setDisable(true);
+        //this.setPrintedFileBtn.setDisable(true);
         this.setPrintedFileBtn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
