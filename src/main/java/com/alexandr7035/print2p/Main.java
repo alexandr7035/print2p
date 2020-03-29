@@ -80,7 +80,6 @@ public class Main extends Application {
         // printFirstBtn
          // FIXME use lambda
         this.printFirstBtn = (Button) scene.lookup("#printFirstBtn");
-        this.printFirstBtn.setDisable(true);
         this.printFirstBtn.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
@@ -99,7 +98,6 @@ public class Main extends Application {
         // printSecondBtn
         // FIXME use lambda
         this.printSecondBtn = (Button) scene.lookup("#printSecondBtn");
-        this.printSecondBtn.setDisable(true);
         this.printSecondBtn.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
@@ -130,7 +128,6 @@ public class Main extends Application {
         // resetPrintedFileBtn
         // FIXME use lambda
         this.resetPrintedFileBtn = (Button) scene.lookup("#resetPrintedFileBtn");
-        this.resetPrintedFileBtn.setDisable(true);
         this.resetPrintedFileBtn.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
@@ -143,7 +140,6 @@ public class Main extends Application {
         // viewDocBtn
         // FIXME use lambda
         this.viewDocBtn = (Button) scene.lookup("#viewDocBtn");
-        this.viewDocBtn.setDisable(true);
         this.viewDocBtn.setOnAction(new EventHandler<ActionEvent>() {
             
             @Override
@@ -159,6 +155,9 @@ public class Main extends Application {
             }
         });
         
+        // Call resetPrintedFile on start to disable buttons
+        this.resetPrintedFile();
+
         // Allow dropping file to textArea
         this.enableFileDropping();
 
@@ -191,6 +190,9 @@ public class Main extends Application {
         // FIXME can document be extended from File???
         File doc_file = new File(filePath);
         this.printedDoc = new Document(doc_file);
+
+        // Set pages conunt to "..." while loading
+        this.pagesCountLabel.setText("...");
 
         // Use background Task to prepare doc
         Task prepareDocTask = new Task<Boolean>() {
@@ -254,7 +256,7 @@ public class Main extends Application {
 
         // Reset widgets
         this.printedFileField.setText("");
-        this.pagesCountLabel.setText("");
+        this.pagesCountLabel.setText("—");
 
         // Disable buttons
         this.printFirstBtn.setDisable(true);
