@@ -194,6 +194,9 @@ public class Main extends Application {
         // Set pages conunt to "..." while loading
         this.pagesCountLabel.setText("...");
 
+        // Set printedFileField's text to '...' while loading
+        this.printedFileField.setText("...");
+
         // Use background Task to prepare doc
         Task prepareDocTask = new Task<Boolean>() {
 
@@ -255,7 +258,7 @@ public class Main extends Application {
     private void resetPrintedFile() {
 
         // Reset widgets
-        this.printedFileField.setText("");
+        this.printedFileField.setText("🖨 Drop your 🖨\n document\n here ⬇️");
         this.pagesCountLabel.setText("—");
 
         // Disable buttons
