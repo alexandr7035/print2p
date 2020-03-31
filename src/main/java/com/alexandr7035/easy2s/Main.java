@@ -50,6 +50,7 @@ public class Main extends Application {
     private Label pagesCountLabel;
 
     private ProgressBar progressBar;
+    private Task prepareDocTask;
 
     private GridPane mainLayout;
     private Scene scene;
@@ -168,6 +169,7 @@ public class Main extends Application {
                 File file = fileChooser.showOpenDialog(stage);
 
                 if (file != null) {
+                    Main.this.resetPrintedFile();
                     logger.info("choosed file " + file.getAbsolutePath());
                     Main.this.setPrintedFile(file.getAbsolutePath());
                 }
@@ -249,8 +251,17 @@ public class Main extends Application {
         // Set printedFileField's text to '...' while loading
         this.printedFileField.setText("...");
 
+        // Disable widgets
+        this.setPrintedFileBtn.setDisable(true);
+        this.viewDocBtn.setDisable(true);
+        this.printFirstBtn.setDisable(true);
+        this.printSecondBtn.setDisable(true);
+
+        // Enabled for cancelling
+        this.resetPrintedFileBtn.setDisable(false);
+
         // Use background Task to prepare doc
-        Task prepareDocTask = new Task<Boolean>() {
+        prepareDocTask = new Task<Boolean>() {
 
             @Override
             protected Boolean call() throws Exception {
@@ -284,6 +295,7 @@ public class Main extends Application {
                         printSecondBtn.setDisable(false);
                         resetPrintedFileBtn.setDisable(false);
                         viewDocBtn.setDisable(false);
+                        setPrintedFileBtn.setDisable(false);
 
                         // Set info to widgets
                         printedFileField.setText(doc_file.getName());
@@ -297,7 +309,9 @@ public class Main extends Application {
                             logger.warning("failed to convert document to pdf, call resetPrintedFile()");
                            // See resetPrintedFile() method
                            resetPrintedFile();
-                        }    
+                        }
+                        
+                        prepareDocTask = null;
                     }
                  
              });
@@ -316,6 +330,16 @@ public class Main extends Application {
 
         logger.info("resetPrintedFile method called");
 
+        // Kill prepareDocTask if it was running
+        if(prepareDocTask != null) {
+            prepareDocTask.cancel();
+            prepareDocTask = null;
+            // Unbind progressBar 
+            progressBar.progressProperty().unbind();
+            progressBar.setProgress(0);
+            logger.info("killed running prepareDocTask");
+        }
+
         // Reset widgets
         this.printedFileField.setText("🖨 Drop your 🖨\n document\n here ⬇️");
         this.pagesCountLabel.setText("—");
@@ -325,6 +349,9 @@ public class Main extends Application {
         this.printSecondBtn.setDisable(true);
         this.resetPrintedFileBtn.setDisable(true);
         this.viewDocBtn.setDisable(true);
+
+        // Enable setPrintedFile bitton
+        this.setPrintedFileBtn.setDisable(false);
 
         // Set printedDoc to null
         this.printedDoc = null;
