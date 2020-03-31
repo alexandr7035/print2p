@@ -1,11 +1,11 @@
-package com.alexandr7035.print2p;
+package com.alexandr7035.easy2s;
 
 import java.io.File;
 
 public final class Settings {
 
     private static final String WORKING_DIR_PATH = System.getProperty("user.home") +
-                                                     File.separator + ".print2p";
+                                                     File.separator + ".easy2s";
 
     private static final File WORKING_DIR = new File(WORKING_DIR_PATH);
     public static final File DOC_DIR = new File(WORKING_DIR_PATH + "/doc");

@@ -1,4 +1,4 @@
-package com.alexandr7035.print2p;
+package com.alexandr7035.easy2s;
 
 import java.util.ArrayList;
 import java.io.IOException;

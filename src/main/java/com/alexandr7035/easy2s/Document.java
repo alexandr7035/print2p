@@ -1,9 +1,9 @@
-package com.alexandr7035.print2p;
+package com.alexandr7035.easy2s;
 
 import java.io.File;
 import java.io.IOException;
 
-import com.alexandr7035.print2p.Settings;
+import com.alexandr7035.easy2s.Settings;
 
 import java.util.Arrays;
 import java.util.ArrayList;
