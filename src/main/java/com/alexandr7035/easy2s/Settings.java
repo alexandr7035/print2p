@@ -4,8 +4,13 @@ import java.io.File;
 
 public final class Settings {
 
+    public static final String PROJECT_NAME = "easy2s";
+    public static final double PROJECT_VERSION = 1.0;
+
+    public static final String WINDOW_TITLE = "Easy2S v" + PROJECT_VERSION;
+
     private static final String WORKING_DIR_PATH = System.getProperty("user.home") +
-                                                     File.separator + ".easy2s";
+                                                     File.separator + "." + PROJECT_NAME;
 
     private static final File WORKING_DIR = new File(WORKING_DIR_PATH);
     public static final File DOC_DIR = new File(WORKING_DIR_PATH + "/doc");

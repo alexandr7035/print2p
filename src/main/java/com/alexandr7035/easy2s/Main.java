@@ -102,6 +102,9 @@ public class Main extends Application {
         // Apply styles
         scene.getStylesheets().add(Main.class.getResource("/css/main.css").toExternalForm());
 
+        // Set app title
+        stage.setTitle(Settings.WINDOW_TITLE);
+
         // Widgets
         this.printedFileField = (Label) scene.lookup("#printedFileField");
         this.pagesCountLabel = (Label) scene.lookup("#pagesCountLabel");
