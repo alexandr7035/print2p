@@ -5,15 +5,15 @@
 ## Requirements
 ### Maven dependencies:
 
- - **PDFBox**
- - **JavaFX**
- - **JaxfFX-FXML**
+ - PDFBox
+ - JavaFX
+ - JaxfFX-FXML
 
 
 ### External utils:
-- **bash**
- - **lp**
- - **unoconv**
- - **psutils**
- - **poppler-utils**
+- bash
+ - lp
+ - unoconv
+ - psutils
+ - poppler-utils
 
