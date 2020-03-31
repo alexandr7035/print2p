@@ -4,7 +4,7 @@
   <groupId>com.alexandr7035.easy2s</groupId>
   <artifactId>easy2s</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <name>easy2s</name>
   <url>http://maven.apache.org</url>
 
