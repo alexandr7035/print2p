@@ -15,6 +15,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.FileChooser;
+
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 
@@ -51,6 +53,8 @@ public class Main extends Application {
 
     private GridPane mainLayout;
     private Scene scene;
+
+    private FileChooser fileChooser;
 
     private Document printedDoc;
 
@@ -109,6 +113,7 @@ public class Main extends Application {
         this.printedFileField = (Label) scene.lookup("#printedFileField");
         this.pagesCountLabel = (Label) scene.lookup("#pagesCountLabel");
         this.progressBar = (ProgressBar) scene.lookup("#progressBar");
+        this.fileChooser = new FileChooser();
 
         // printFirstBtn
          // FIXME use lambda
@@ -157,6 +162,18 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
                 logger.info("pressed button " + "<setPrintedFileBtn>");
+                
+                // Show file chooser and get path
+                // Call setPrintedFile if file is selected
+                File file = fileChooser.showOpenDialog(stage);
+
+                if (file != null) {
+                    logger.info("choosed file " + file.getAbsolutePath());
+                    Main.this.setPrintedFile(file.getAbsolutePath());
+                }
+                else {
+                    logger.info("file is not choosed (openFileDialog closed)");
+                }
             }
         });
         
