@@ -32,6 +32,7 @@ import javafx.scene.input.*;
 
 import java.util.logging.*;
 
+
 public class Main extends Application {
     
     private static final int WINDOW_WIDTH = 400;
@@ -58,19 +59,31 @@ public class Main extends Application {
     // Class constructor
     public Main() {
         
+        Settings.initApp();
+
         // FIXME 
         InputStream stream = Main.class.getClassLoader().getResourceAsStream("logging.properties");
         try {
             LogManager.getLogManager().readConfiguration(stream);
             this.logger = Logger.getLogger(Main.class.getName());
+            
+
+            FileHandler fh = new FileHandler(Settings.LOG_PATTERN, 
+                                            Settings.LOG_LIMIT,
+                                            Settings.LOG_FILES_NUMBER,
+                                            true);
+
+            SimpleFormatter sf = new SimpleFormatter();  
+            fh.setFormatter(sf);
+            logger.addHandler(fh);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        logger.info("");
         logger.info("the app has been started now");
 
-        Settings.initApp();
 
         this.printedDoc = null;
 
