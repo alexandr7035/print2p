@@ -24,18 +24,14 @@ public class PrintWrapper {
         return command;
     }
 
-    public static void printFirst(Document document) {
-        System.out.println("PrintWrapper: printfirst called");
-
+    public static int printFirst(Document document) {
         ArrayList<String> command = getPrintFirstCommand(document.getPreparedDocPath());
-        CmdExecutor.executeSilentCommand(command);
+        return CmdExecutor.executeSilentCommand(command);
     }
 
-    public static void printSecond(Document document) {
-        System.out.println("PrintWrapper: printsecond called");
-
+    public static int printSecond(Document document) {
         ArrayList<String> command = getPrintSecondCommand(document.getPreparedDocPath());
-        CmdExecutor.executeSilentCommand(command);
+        return CmdExecutor.executeSilentCommand(command);
     }
     
 }

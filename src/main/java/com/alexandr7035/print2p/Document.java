@@ -44,17 +44,18 @@ public class Document {
             executedCommand.add(this.docPath);
 
             // Run command and get exit status
-            System.out.println("RUN COMMAND: " + executedCommand.toString());
+            //System.out.println("RUN COMMAND: " + executedCommand.toString());
 
             if (CmdExecutor.executeSilentCommand(executedCommand) == 0) {
-                System.out.println("UNOCONV SUCCEEDED");
+                
+                //System.out.println("UNOCONV SUCCEEDED");
                 
                 this.isPrepared = true;
                 return true;
             }
     
             else {
-                System.out.println("UNOCONV FAILED");
+                //System.out.println("UNOCONV FAILED");
 
                 this.isPrepared = false;
                 return false;

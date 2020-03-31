@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.File;
+import java.io.InputStream;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -29,6 +30,7 @@ import javafx.fxml.FXMLLoader;
 
 import javafx.scene.input.*;
 
+import java.util.logging.*;
 
 public class Main extends Application {
     
@@ -51,12 +53,27 @@ public class Main extends Application {
 
     private Document printedDoc;
 
+    private Logger logger;
+
     // Class constructor
     public Main() {
+        
+        // FIXME 
+        InputStream stream = Main.class.getClassLoader().getResourceAsStream("logging.properties");
+        try {
+            LogManager.getLogManager().readConfiguration(stream);
+            this.logger = Logger.getLogger(Main.class.getName());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        logger.info("the app has been started now");
 
         Settings.initApp();
 
         this.printedDoc = null;
+
 
     }
 
@@ -84,13 +101,14 @@ public class Main extends Application {
  
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("PRESSED: printFirstBtn");
+                logger.info("pressed button " + "<printFirstBtn>");
 
-                if (Main.this.printedDoc == null) {
-                    System.out.println("WARNING: no printed document set");
+                if (PrintWrapper.printFirst(Main.this.printedDoc) == 0) {
+                    logger.info("print[1] job successfullty sent to printer");
+                } 
+                else {
+                    logger.warning("failed to send print[1] job to printer");
                 }
-
-                PrintWrapper.printFirst(Main.this.printedDoc);
 
             }
         });
@@ -102,13 +120,14 @@ public class Main extends Application {
  
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("PRESSED: printSecondBtn");
+                logger.info("pressed button " + "<printSecondBtn>");
 
-                if (Main.this.printedDoc == null) {
-                    System.out.println("WARNING: no printed document set");
+                if (PrintWrapper.printSecond(Main.this.printedDoc) == 0) {
+                    logger.info("print[2] job successfullty sent to printer");
+                } 
+                else {
+                    logger.warning("failed to send print[2] job to printer");
                 }
-
-                PrintWrapper.printSecond(Main.this.printedDoc);
             }
         });
 
@@ -121,7 +140,7 @@ public class Main extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("PRESSED: setPrintedFileBtn");
+                logger.info("pressed button " + "<setPrintedFileBtn>");
             }
         });
         
@@ -132,7 +151,7 @@ public class Main extends Application {
  
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("PRESSED: resetPrintedFileBtn");
+                logger.info("pressed button " + "<resetPrintedFileBtn>");
                 Main.this.resetPrintedFile();
             }
         });
@@ -144,12 +163,12 @@ public class Main extends Application {
             
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("PRESSED: viewDocBtn");
+                logger.info("pressed button " + "<viewDocBtn>");
 
                 ArrayList<String> viewCommand = new ArrayList(Arrays.asList("xdg-open", 
                                                          Main.this.printedDoc.getPreparedDocPath()));
 
-                System.out.println(viewCommand.toString());
+                logger.info("execute command " + viewCommand.toString());
 
                 CmdExecutor.executeSilentCommand(viewCommand);
             }
@@ -216,6 +235,9 @@ public class Main extends Application {
                     Boolean task_result = (Boolean) prepareDocTask.getValue();
 
                     if (task_result == true) { 
+
+                        logger.info("converted to pdf succesfully");
+
                         // Unbind progressBar 
                         progressBar.progressProperty().unbind();
                         progressBar.setProgress(0);
@@ -234,11 +256,12 @@ public class Main extends Application {
                         printedFileField.setText(doc_file.getName());
                         pagesCountLabel.setText("" + printedDoc.getPagesCount());
 
-                        System.out.println("PAGES: " + printedDoc.getPagesCount());
+                        //System.out.println("PAGES: " + printedDoc.getPagesCount());
                         }
 
                         // If conversion to pdf is not successfull 
                         else {
+                            logger.warning("failed to convert document to pdf, call resetPrintedFile()");
                            // See resetPrintedFile() method
                            resetPrintedFile();
                         }    
@@ -249,6 +272,7 @@ public class Main extends Application {
         // Bind task to progressBar and run
         progressBar.progressProperty().unbind();
         progressBar.progressProperty().bind(prepareDocTask.progressProperty());
+        logger.info("started converting document to PDF");
         new Thread(prepareDocTask).start();
         
       }
@@ -256,6 +280,8 @@ public class Main extends Application {
     
     // Clear all widgets and disable buttons as when program is started
     private void resetPrintedFile() {
+
+        logger.info("resetPrintedFile method called");
 
         // Reset widgets
         this.printedFileField.setText("🖨 Drop your 🖨\n document\n here ⬇️");
@@ -299,6 +325,7 @@ public class Main extends Application {
                     // Reset printed file if was set before
                     Main.this.resetPrintedFile();
                     // Set printed file
+                    logger.info("dropped document \"" + db.getFiles().get(0).getAbsolutePath() + "\" to <printedFileField>");
                     Main.this.setPrintedFile(db.getFiles().get(0).getAbsolutePath());
                     success = true;
                 }
